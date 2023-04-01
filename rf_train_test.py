@@ -10,6 +10,9 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_a
 
 
 def get_data():
+        """
+        Load data from sklearn and create dataframes.
+        """
         # Load iris data set.
         iris = load_iris()
         # Extract features to dataframe and add column names.
@@ -26,6 +29,9 @@ def get_data():
 
 
 def preprocess_data(features, target):
+        """
+        Split into train and test then scale.
+        """
         # Split into train and test data.
         x_train, x_test, y_train, y_test = train_test_split(
                 features,
@@ -49,7 +55,10 @@ def preprocess_data(features, target):
         return x_train_prepared, y_train, x_test_prepared, y_test
 
 
-def train_model(x_train, y_train, cv_folds=5, n_iter=10):
+def train_model(x_train, y_train, cv_folds=5, n_iter=2):
+        """
+        Train model using a random grid search. Output the best performing model.
+        """
         # Define search grid.
         param_grid = [
                 {'bootstrap': [True, False],
@@ -76,22 +85,22 @@ def train_model(x_train, y_train, cv_folds=5, n_iter=10):
 
 
 def test_model(model, x_test, y_test):
-    """
-    Test model performance on accuracy, precision, recall and AUC.
-    :param model: Churn classification model.
-    :param validation_prepared: Validation data set ready to be used by the model.
-    :param validation_labels: Labels for the validation data set (retained = 1, churned = 0).
-    :return: Dataframe of model performance metrics.
-    """
-    predictions = model.predict(x_test)
-    accuracy = accuracy_score(y_test, predictions)
-    precision = precision_score(y_test, predictions, average='weighted')
-    recall = recall_score(y_test, predictions, average='weighted')
-    print('Accuracy :', accuracy)
-    print('Precision: ', precision)
-    print('Recall: ', recall)
+        """
+        Test model performance on accuracy, precision, recall and AUC.
+        :param model: Churn classification model.
+        :param validation_prepared: Validation data set ready to be used by the model.
+        :param validation_labels: Labels for the validation data set (retained = 1, churned = 0).
+        :return: Dataframe of model performance metrics.
+        """
+        predictions = model.predict(x_test)
+        accuracy = accuracy_score(y_test, predictions)
+        precision = precision_score(y_test, predictions, average='weighted')
+        recall = recall_score(y_test, predictions, average='weighted')
+        print('Accuracy :', accuracy)
+        print('Precision: ', precision)
+        print('Recall: ', recall)
 
-    return accuracy, precision, recall
+        return accuracy, precision, recall
 
 
 # Execute functions to train RF model and return performance metrics.
@@ -99,3 +108,6 @@ x, y = get_data()
 x_train, y_train, x_test, y_test = preprocess_data(x, y)
 model = train_model(x_train, y_train)
 test_model(model, x_test, y_test)
+
+
+# Some new lines.
