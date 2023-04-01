@@ -1,0 +1,10 @@
+.ipynb_checkpoints
+.csv
+.idea
+data/
+__pycache__/
+.DS_Store
+models/
+notebooks/
+*.sav
+.secrets
